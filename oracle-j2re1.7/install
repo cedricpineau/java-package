@@ -36,7 +36,7 @@ program_alternative unpack200
 arch_dir="$(dpkg --print-architecture)"
 
 # assemble the plugin path
-plugin_dir="$j2se_base/plugin/$arch_dir"
+plugin_dir="$j2se_base/lib/$arch_dir"
 
 # iceweasel
 iceweasel_dir="/usr/lib/iceweasel/plugins"
