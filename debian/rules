@@ -30,7 +30,7 @@ install: build
 
 	install -m 755 make-jpkg.out $(B)/usr/bin/make-jpkg
 	cp lib/*.sh lib/*-common $(B)/usr/share/java-package/
-	for dir in $(wildcard blackdown-j2*) $(wildcard sun-j2*) $(wildcard ibm-j2*); do \
+	for dir in $(wildcard oracle-j2*); do \
 		cp -a $$dir $(B)/usr/share/java-package/; \
 	done
 	find $(B) -type d -name .svn | xargs -r rm -r
