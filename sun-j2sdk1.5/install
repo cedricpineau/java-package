@@ -1,0 +1,105 @@
+suffix=j2sdk1.5-sun
+j2se_base="/usr/lib/$suffix"
+priority=315
+
+if [ ! -e "$j2se_base/debian/info" ]; then
+    exit 0
+fi
+
+# alternative <program>
+function program_alternative() {
+    local program="$1"
+    update-alternatives \
+	--install "/usr/bin/$program" "$program" \
+	"$j2se_base/bin/$program" "$priority" \
+	--slave "/usr/share/man/man1/$program.1.gz" "$program.1.gz" \
+	"$j2se_base/man/man1/$program.1.gz"
+}
+
+# alternative <program> without man page
+function program_alternative_no_man() {
+    local program="$1"
+    update-alternatives \
+	--install "/usr/bin/$program" "$program" \
+	"$j2se_base/bin/$program" "$priority"
+}
+
+# kinit, klist, and ktab not installed at this
+# time; handling of /etc/krb5.conf not addressed
+# JRE-specific alternatives with JDKs cannot be 
+# handled by our current approach
+program_alternative appletviewer
+program_alternative apt
+program_alternative_no_man ControlPanel
+program_alternative extcheck
+program_alternative_no_man HtmlConverter
+program_alternative idlj
+program_alternative jar
+program_alternative jarsigner
+program_alternative java
+program_alternative javac
+program_alternative javadoc
+program_alternative javah
+program_alternative javap
+program_alternative_no_man java-rmi.cgi
+program_alternative javaws
+program_alternative jconsole
+program_alternative jdb
+program_alternative jinfo
+program_alternative jmap
+program_alternative jps
+program_alternative jsadebugd
+program_alternative jstack
+program_alternative jstat
+program_alternative jstatd
+program_alternative keytool
+program_alternative native2ascii
+program_alternative orbd
+program_alternative pack200
+program_alternative policytool
+program_alternative rmic
+program_alternative rmid
+program_alternative rmiregistry
+program_alternative serialver
+program_alternative servertool
+program_alternative tnameserv
+program_alternative unpack200
+
+# derive the architecture-specific 
+# directory for the plugin
+arch_dir="$(dpkg --print-architecture)"
+
+# assemble the plugin path
+plugin_dir="$j2se_base/jre/plugin/$arch_dir"
+
+# netscape
+netscape_dir="/usr/lib/netscape/plugins-libc6"
+[ -d "$netscape_dir" ] || install -d -m 755 "$netscape_dir"
+update-alternatives \
+    --install "$netscape_dir/libjavaplugin.so" \
+	"netscape-javaplugin.so" \
+    	"$plugin_dir/ns4/libjavaplugin.so" "$priority"
+
+# mozilla
+mozilla_dir="/usr/lib/mozilla/plugins"
+[ -d "$mozilla_dir" ] || install -d -m 755 "$mozilla_dir"
+update-alternatives \
+    --install "$mozilla_dir/libjavaplugin.so" \
+	"mozilla-javaplugin.so" \
+    	"$plugin_dir/ns7/libjavaplugin_oji.so" "$priority"
+
+# firefox
+firefox_dir="/usr/lib/mozilla-firefox/plugins"
+[ -d "$firefox_dir" ] || install -d -m 755 "$firefox_dir"
+update-alternatives \
+    --install "$firefox_dir/libjavaplugin.so" \
+	"firefox-javaplugin.so" \
+    	"$plugin_dir/ns7/libjavaplugin_oji.so" "$priority"
+
+# iceweasel
+iceweasel_dir="/usr/lib/iceweasel/plugins"
+[ -d "$iceweasel_dir" ] || install -d -m 755 "$iceweasel_dir"
+update-alternatives \
+    --install "$iceweasel_dir/libjavaplugin.so" \
+	"iceweasel-javaplugin.so" \
+	"$plugin_dir/ns7/libjavaplugin_oji.so" "$priority"

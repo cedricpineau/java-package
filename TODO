@@ -1,0 +1,5 @@
+Move repeated code in install/remove scripts to a single point; apply the DRY (don't repeat yourself) principle.
+
+Change handling of alternatives to allow for multiple directories, i.e. when you have executables in both bin and jre/bin in a JDK.
+
+Remove use of dpkg --print-architecture from plugin alternatives installation in install/remove scripts.

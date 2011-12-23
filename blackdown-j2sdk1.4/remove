@@ -1,0 +1,64 @@
+suffix=j2sdk1.4-blackdown
+j2se_base="/usr/lib/$suffix"
+
+if [ ! -e "$j2se_base/debian/info" ]; then
+    exit 0
+fi
+
+# alternative <program>
+function program_alternative() {
+    local program="$1"
+    update-alternatives \
+	--remove "$program" "$j2se_base/bin/$program"
+}
+
+program_alternative appletviewer
+program_alternative ControlPanel
+program_alternative extcheck
+program_alternative HtmlConverter
+program_alternative idlj
+program_alternative jar
+program_alternative java
+program_alternative javac
+program_alternative javadoc
+program_alternative javah
+program_alternative javap
+program_alternative java-rmi.cgi
+program_alternative javaws
+program_alternative jdb
+program_alternative keytool
+program_alternative native2ascii
+program_alternative orbd
+program_alternative policytool
+program_alternative rmic
+program_alternative rmid
+program_alternative rmiregistry
+program_alternative serialver
+program_alternative servertool
+program_alternative tnameserv
+
+# derive the architecture-specific 
+# directory for the plugin
+arch_dir="$(dpkg --print-architecture)"
+
+# assemble the plugin path
+plugin_dir="$j2se_base/plugin/$arch_dir"
+
+# In 1.4.2, plugins got 'lib' prepended
+if dpkg --compare-versions "$j2se_version" ge "1.4.2"; then
+	lib="lib"
+else
+	lib=""
+fi
+
+# netscape
+update-alternatives \
+    --remove "netscape-javaplugin.so" "$plugin_dir/netscape4/${lib}javaplugin.so"
+
+# mozilla
+update-alternatives \
+    --remove "mozilla-javaplugin.so" "$plugin_dir/mozilla/${lib}javaplugin_oji.so"
+
+# firefox
+update-alternatives \
+    --remove "firefox-javaplugin.so" "$plugin_dir/mozilla/${lib}javaplugin_oji.so"

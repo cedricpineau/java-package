@@ -1,0 +1,42 @@
+suffix=j2re1.3-blackdown
+j2se_base="/usr/lib/$suffix"
+
+if [ ! -e "$j2se_base/debian/info" ]; then
+    exit 0
+fi
+
+# alternative <program>
+function program_alternative() {
+    local program="$1"
+    update-alternatives \
+	--remove "$program" "$j2se_base/bin/$program"
+}
+
+program_alternative j2sdk-config
+program_alternative java
+program_alternative JavaPluginControlPanel
+program_alternative keytool
+program_alternative policytool
+program_alternative realpath
+program_alternative rmid
+program_alternative rmiregistry
+program_alternative tnameserv
+
+# derive the architecture-specific 
+# directory for the plugin
+arch_dir="$(dpkg --print-architecture)"
+
+# assemble the plugin path
+plugin_dir="$j2se_base/plugin/$arch_dir"
+
+# netscape
+update-alternatives \
+    --remove "netscape-javaplugin.so" "$plugin_dir/netscape4/javaplugin.so"
+
+# mozilla
+update-alternatives \
+    --remove "mozilla-javaplugin.so" "$plugin_dir/mozilla/javaplugin_oji.so"
+
+# firefox
+update-alternatives \
+    --remove "firefox-javaplugin.so" "$plugin_dir/mozilla/javaplugin_oji.so"

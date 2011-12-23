@@ -1,0 +1,91 @@
+
+    suffix=j2sdk1.6-ibm
+    j2se_base="/usr/lib/$suffix"
+    priority=316
+
+    if [ ! -e "$j2se_base/debian/info" ]; then
+        exit 0
+    fi
+
+    # alternative <program>
+    function program_alternative() {
+        local program="$1"
+        cat >/usr/bin/$program-$suffix <<EOF
+#! /bin/sh
+exec $j2se_base/bin/$program \${1+"\$@"}
+EOF
+        chmod 755 /usr/bin/$program-$suffix
+        update-alternatives \
+            --install "/usr/bin/$program" "$program" \
+            "/usr/bin/$program-$suffix" "$priority"
+    }
+
+    program_alternative appletviewer
+    program_alternative apt
+    program_alternative extcheck
+    program_alternative HtmlConverter
+    program_alternative idlj
+    program_alternative jar
+    program_alternative jarsigner
+    program_alternative java
+    program_alternative javac
+    program_alternative javadoc
+    program_alternative javah
+    program_alternative javap
+    program_alternative java-rmi.cgi
+    program_alternative javaw
+    program_alternative javaws
+    program_alternative jconsole
+    program_alternative jdb
+    program_alternative jdmpview
+    program_alternative keytool
+    program_alternative native2ascii
+    program_alternative policytool
+    program_alternative rmic
+    program_alternative rmid
+    program_alternative rmiregistry
+    program_alternative serialver
+    program_alternative tnameserv
+
+    # assemble the java plugin path
+    plugin_dir="$j2se_base/jre/bin"
+
+    # netscape
+    netscape_dir="/usr/lib/netscape/plugins-libc6"
+    
+    install_java_plugin "$netscape_dir" "libjavaplugin.so" \
+            "netscape-javaplugin.so" \
+            "$plugin_dir/libjavaplugin_oji.so" \
+            "$priority"
+
+    # mozilla
+    mozilla_dir="/usr/lib/mozilla/plugins"
+    
+    install_java_plugin "$mozilla_dir" "libjavaplugin.so" \
+            "mozilla-javaplugin.so" \
+            "$plugin_dir/libjavaplugin_oji.so" \
+            "$priority"
+
+    # mozilla-firefox (pre-1.5)
+    mozilla_firefox_dir="/usr/lib/mozilla-firefox/plugins"
+    
+    install_java_plugin "$mozilla_firefox_dir" "libjavaplugin.so" \
+            "mozilla-firefox-javaplugin.so" \
+            "$plugin_dir/libjavaplugin_oji.so" \
+            "$priority"
+
+    # firefox (1.5+)
+    firefox_dir="/usr/lib/firefox/plugins"
+    
+    install_java_plugin "$firefox_dir" "libjavaplugin.so" \
+            "firefox-javaplugin.so" \
+            "$plugin_dir/ns7/libjavaplugin_oji.so" \
+            "$priority"
+
+    # iceweasel
+    iceweasel_dir="/usr/lib/mozilla-iceweasel/plugins"
+
+    install_java_plugin "$iceweasel_dir" "libjavaplugin.so" \
+	     "iceweasel-javaplugin.so" \
+            "$plugin_dir/ns7/libjavaplugin_oji.so" \
+            "$priority"

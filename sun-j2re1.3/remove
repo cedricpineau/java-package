@@ -1,0 +1,34 @@
+suffix=j2re1.3-sun
+j2se_base="/usr/lib/$suffix"
+
+if [ ! -e "$j2se_base/debian/info" ]; then
+    exit 0
+fi
+
+# alternative <program>
+function program_alternative() {
+    local program="$1"
+    update-alternatives \
+	--remove "$program" "$j2se_base/bin/$program"
+}
+
+program_alternative java
+program_alternative keytool
+program_alternative policytool
+program_alternative realpath
+program_alternative rmid
+program_alternative rmiregistry
+
+plugin_dir="$j2se_base/plugin/i386"
+
+# netscape
+update-alternatives \
+    --remove "netscape-javaplugin.so" "$plugin_dir/ns4/javaplugin.so"
+
+# mozilla
+update-alternatives \
+    --remove "mozilla-javaplugin.so" "$plugin_dir/ns600/libjavaplugin_oji.so"
+
+# firefox
+update-alternatives \
+    --remove "firefox-javaplugin.so" "$plugin_dir/ns600/libjavaplugin_oji.so"

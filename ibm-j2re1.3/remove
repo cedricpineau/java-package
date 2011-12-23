@@ -1,0 +1,43 @@
+suffix=j2re1.3-ibm
+j2se_base="/usr/lib/$suffix"
+
+if [ ! -e "$j2se_base/debian/info" ]; then
+    exit 0
+fi
+
+# alternative <program>
+function program_alternative() {
+    local program="$1"
+    update-alternatives \
+        --remove "$program" "/usr/bin/$program-$suffix"
+    rm "/usr/bin/$program-$suffix"
+}
+
+program_alternative java
+program_alternative JavaPluginControlPanel
+program_alternative javaw
+program_alternative jextract
+program_alternative keytool
+program_alternative policytool
+program_alternative rmid
+program_alternative rmiregistry
+program_alternative tnameserv
+
+if [ $(dpkg --print-architecture) = i386 ] ; then
+
+    # assemble the plugin path
+    plugin_dir="$j2se_base/jre/bin"
+
+    # netscape
+    update-alternatives \
+        --remove "netscape-javaplugin.so" "$plugin_dir/libjavaplugin_oji.so"
+
+    # mozilla
+    update-alternatives \
+        --remove "mozilla-javaplugin.so" "$plugin_dir/libjavaplugin_oji.so"
+
+    # firefox
+    update-alternatives \
+        --remove "firefox-javaplugin.so" "$plugin_dir/libjavaplugin_oji.so"
+
+fi
