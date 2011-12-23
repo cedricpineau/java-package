@@ -15,7 +15,7 @@ function oracle_j2sdk_detect() {
       case "$archive_name" in
 	"jdk-7u"[0-9]"-linux-x64.tar.gz") # SUPPORTED
 	    j2se_version=1.7.0+update${archive_name:6:1}${revision}
-	    j2se_expected_min_size=220 # ?
+	    j2se_expected_min_size=180 #Mb
 	    found=true
 	    ;;
       esac

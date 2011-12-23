@@ -11,7 +11,7 @@ function oracle_j2re_detect() {
       case "$archive_name" in
 	"jre-7u"[0-9]"-linux-x64.tar.gz") # SUPPORTED
 	    j2se_version=1.7.0+update${archive_name:6:1}${revision}
-	    j2se_expected_min_size=20 # ?
+	    j2se_expected_min_size=88 #Mb
 	    found=true
 	    ;;
       esac
