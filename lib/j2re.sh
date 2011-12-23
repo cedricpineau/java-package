@@ -50,7 +50,7 @@ function j2re_run() {
     diskfree "$j2se_required_space"
     read_maintainer_info
     j2se_package="$j2se_vendor-j2re$j2se_release"
-    j2se_base="/usr/lib/j2re$j2se_release-$j2se_vendor"
+    j2se_base="/usr/lib/jvm/j2re$j2se_release-$j2se_vendor"
     local target="$install_dir$j2se_base"
     install -d -m 755 "$( dirname "$target" )"
     extract_bin "$archive_path" "$j2se_expected_min_size" "$target"
