@@ -1,6 +1,7 @@
 java-package (0.50) UNRELEASED; urgency=low
 
-  * Java-package reset for reintroduction in debian
+  * Java-package reset for reintroduction in debian (removal of all
+    previously supported jvm.
   * Add support for Oracle Java 7
 
  -- Cédric Pineau <cedric.pineau@gmail.com>  Thu, 22 Dec 2011 11:42:13 +0100
