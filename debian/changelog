@@ -1,3 +1,10 @@
+java-package (0.50) UNRELEASED; urgency=low
+
+  * Java-package reset for reintroduction in debian
+  * Add support for Oracle Java 7
+
+ -- Cédric Pineau <cedric.pineau@gmail.com>  Thu, 22 Dec 2011 11:42:13 +0100
+
 java-package (0.43) UNRELEASED; urgency=low
 
   * Remove Java plugins for all browsers (Closes: #367887).
