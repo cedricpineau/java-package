@@ -29,7 +29,6 @@ function program_alternative_no_man() {
 # JRE-specific alternatives with JDKs cannot be 
 # handled by our current approach
 program_alternative appletviewer
-program_alternative apt
 program_alternative_no_man ControlPanel
 program_alternative extcheck
 program_alternative idlj

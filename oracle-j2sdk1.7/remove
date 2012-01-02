@@ -13,7 +13,6 @@ function program_alternative() {
 }
 
 program_alternative appletviewer
-program_alternative apt
 program_alternative ControlPanel
 program_alternative extcheck
 program_alternative idlj
