@@ -5,6 +5,11 @@ function oracle_j2re_detect() {
   case "${DEB_BUILD_ARCH:-$DEB_BUILD_GNU_TYPE}" in
     i386|i486-linux-gnu)
       case "$archive_name" in
+	"jre-6u"[0-9][0-9]"-linux-i586.bin") # SUPPORTED
+	    j2se_version=1.6.0+update${archive_name:6:2}${revision}
+	    j2se_expected_min_size=16 #Mb
+	    found=true
+	    ;;
 	"jre-7u"[0-9]"-linux-i586.tar.gz") # SUPPORTED
 	    j2se_version=1.7.0+update${archive_name:6:1}${revision}
 	    j2se_expected_min_size=94 #Mb
@@ -14,6 +19,11 @@ function oracle_j2re_detect() {
       ;;
     amd64|x86_64-linux-gnu)
       case "$archive_name" in
+	"jre-6u"[0-9][0-9]"-linux-x64.bin") # SUPPORTED
+	    j2se_version=1.6.0+update${archive_name:6:2}${revision}
+	    j2se_expected_min_size=16 #Mb
+	    found=true
+	    ;;
 	"jre-7u"[0-9]"-linux-x64.tar.gz") # SUPPORTED
 	    j2se_version=1.7.0+update${archive_name:6:1}${revision}
 	    j2se_expected_min_size=88 #Mb
