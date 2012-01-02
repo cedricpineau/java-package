@@ -10,7 +10,7 @@ fi
 
 if [ "$1" = configure ] ; then
     if which install-docs >/dev/null 2>&1; then
-        install-docs -i /usr/share/doc-base/sun-j2sdk1.7-doc
+        install-docs -i /usr/share/doc-base/oracle-j2sdk1.7-doc
     fi
 fi
 
