@@ -2,6 +2,11 @@
 function oracle_j2sdk_doc_detect() {
   local found=
       case "$archive_name" in
+	"jdk-6u"[0-9][0-9]"-apidocs.zip") # SUPPORTED
+	    j2se_version=1.6.0+update${archive_name:6:2}${revision}
+	    j2se_expected_min_size=44 #Mb
+	    found=true
+	    ;;
 	"jdk-7u"[0-9]"-apidocs.zip") # SUPPORTED
 	    j2se_version=1.7.0+update${archive_name:6:1}${revision}
 	    j2se_expected_min_size=290 #Mb
