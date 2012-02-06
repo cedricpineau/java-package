@@ -13,6 +13,12 @@ It works currently with the following Java(TM) 2 REs, SDKs and APIs:
 Usage
 -----
 
+Install the debhelper and fakeroot packages:
+
+> apt-get install debhelper fakeroot
+
+Download the java-package scripts:
+
 > git clone git@github.com:cedricpineau/java-package.git && cd java-package
 
 Download a supported Java(TM) 2 RE or SDK or API tar.gz or self-extracting archive from http://www.oracle.com/technetwork/java/javase/downloads
